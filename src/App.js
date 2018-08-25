@@ -1,18 +1,22 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Form from "./components/Form";
+import EventPreview from "./components/EventPreview";
+import EventTable from "./components/EventTable";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+      <div className="container">
+        <header className="text-center">
+          <h1 className="App-title">Event Form</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="row">
+          <Form />
+          <EventPreview />
+        </div>
+        <div className="row">
+          <EventTable />
+        </div>
       </div>
     );
   }
