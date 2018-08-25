@@ -68,6 +68,10 @@ const EventTable = ({ search, filter, event }) => {
                       Event.eventTime === "All Day") &&
                       search.date === Event.eventDate
                     );
+                  } else if (search.time !== "") {
+                    return search.time === Event.eventTime;
+                  } else if (search.date !== "") {
+                    return search.date === Event.eventDate;
                   } else {
                     return true;
                   }
@@ -75,7 +79,7 @@ const EventTable = ({ search, filter, event }) => {
                 .map((Event, index) => {
                   return (
                     <tr key={index}>
-                      <td>{index+1}</td>
+                      <td>{index + 1}</td>
                       <td>{Event.eventName}</td>
                       <td>{Event.eventDate}</td>
                       <td>{Event.eventTime}</td>

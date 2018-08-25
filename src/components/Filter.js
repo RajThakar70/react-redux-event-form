@@ -9,7 +9,6 @@ const Filter = ({ currentFilter, dispatch }) => {
       {Object.keys(Filters).map((filter, index) => {
         return (
           <div key={filter + index} className="radio">
-            {/* <label> */}
             <input
               type="radio"
               value={filter}
@@ -19,7 +18,6 @@ const Filter = ({ currentFilter, dispatch }) => {
               }}
             />
             {filter}
-            {/* </label> */}
           </div>
         );
       })}

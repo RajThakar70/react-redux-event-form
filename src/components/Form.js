@@ -7,25 +7,41 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      all_day: false
+      all_day: false,
+      event_name: "",
+      event_date: "",
+      event_time: "",
+      location: ""
     };
   }
 
   handleSubmit = e => {
-    let obj = {};
-    obj = { ...this.state };
     e.preventDefault();
-    for (const field in this.refs) {
-      obj[field] = this.refs[field].value;
+    let tempObject = {};
+    for (let field in this.state) {
+      tempObject[field] = this.state[field];
     }
     if (this.state.all_day === true) {
-      obj.event_time = "All Day";
+      tempObject.event_time = "All Day";
     }
-    this.props.dispatch(handleFormSubmit(obj));
+    this.props.dispatch(handleFormSubmit(tempObject));
+    this.setState({
+      all_day: false,
+      event_name: "",
+      event_date: "",
+      event_time: "",
+      location: ""
+    });
   };
 
   getLocation = location => {
     this.setState({ location: location });
+  };
+
+  handleChange = event => {
+    let obj = {};
+    obj[event.target.name] = event.target.value;
+    this.setState(obj);
   };
 
   handelCheckBoxChange = () => {
@@ -37,12 +53,14 @@ class Form extends Component {
   render() {
     return (
       <div className="col-md-4 jumbotron">
+        <h2>Create Event</h2>
         <form onSubmit={e => this.handleSubmit(e)}>
           <div className="form-group">
             Event Name
             <input
               name="event_name"
-              ref="event_name"
+              onChange={e => this.handleChange(e)}
+              value={this.state.event_name}
               type="text"
               className="form-control"
               placeholder="Event Name"
@@ -52,7 +70,8 @@ class Form extends Component {
             Event Date
             <input
               name="event_date"
-              ref="event_date"
+              onChange={e => this.handleChange(e)}
+              value={this.state.event_date}
               className="form-control"
               type="date"
               placeholder="Event Date"
@@ -63,6 +82,7 @@ class Form extends Component {
               <input
                 name="all_day"
                 onClick={this.handelCheckBoxChange}
+                checked={this.state.all_day}
                 id="All Day"
                 component="input"
                 type="checkbox"
@@ -74,9 +94,10 @@ class Form extends Component {
                 Time
                 <input
                   type="time"
+                  onChange={e => this.handleChange(e)}
+                  value={this.state.event_time}
                   className="form-control"
-                  ref="event_time"
-                  name="time"
+                  name="event_time"
                 />
               </div>
             ) : (
@@ -85,7 +106,10 @@ class Form extends Component {
           </div>
           <div className="form-group">
             Location
-            <Location handleChange={this.getLocation} />
+            <Location
+              address={this.state.location}
+              handleChange={this.getLocation}
+            />
           </div>
           <div>
             <button className="btn btn-primary btn-block" type="submit">
